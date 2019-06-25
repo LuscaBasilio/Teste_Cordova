@@ -1,46 +1,45 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+function calcular() {
+    event.preventDefault();
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
+    var base = document.getElementById("base");
+    var low = document.getElementById("low");
+    var medium = document.getElementById("medium");
+    var high = document.getElementById("high");
 
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+    var counter = document.getElementById("counter");
+    var succ = document.getElementById("succ");
+    var crit = document.getElementById("crit");
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+    counter.style.backgroundColor = 'transparent';
+    succ.style.backgroundColor = 'transparent';
+    crit.style.backgroundColor = 'transparent';
 
-        console.log('Received Event: ' + id);
+    var dados = document.getElementById("x").value;
+    var reves = document.getElementById("y").value;
+
+    var y = (reves * 10) * 0.6
+
+    var resultado = dados - y;
+    var baixo = dados * 0.3;
+    var medio = dados * 0.5;
+    var alto = dados * 0.65;
+
+    var baixoSlice = baixo.toString();
+    var medioSlice = medio.toString();
+    var altoSlice = alto.toString();
+
+    if (resultado <= baixo) {
+        counter.style.color = 'red'
     }
-};
-
-app.initialize();
+    if (resultado >= medio && resultado < alto) {
+        succ.style.color = 'red'
+    }
+    if (resultado >= alto) {
+        crit.style.color = 'red'
+    }
+    
+    base.innerHTML = resultado;
+    low.innerHTML = baixoSlice.slice(0, 2);
+    medium.innerHTML = medioSlice.slice(0, 2);
+    high.innerHTML = altoSlice.slice(0, 2);
+}
